@@ -188,8 +188,6 @@
         .back-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 4px; }
         .definition-en { font-size: 1.05rem; font-weight: 400; line-height: 1.4; color: #ffffff; }
         .meaning-vi { font-size: 1.25rem; font-weight: 700; color: #00f2fe; text-shadow: 0 0 8px rgba(0,242,254,0.3); }
-        
-        /* TĂNG KÍCH THƯỚC CHỮ CHO PHẦN VÍ DỤ */
         .example-box { font-size: 1.2rem; color: rgba(255,255,255,0.95); line-height: 1.4; background: rgba(0,0,0,0.2); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); font-style: italic; }
 
         /* CONTROLS */
@@ -246,9 +244,6 @@
         .input-row label { width: 100px; font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.8); }
         .input-row input { flex: 1; border: none; outline: none; font-size: 0.95rem; background: transparent; color: #ffffff; }
         ::placeholder { color: rgba(255,255,255,0.3); }
-        
-        .btn-danger-zone { display: block; width: 100%; padding: 14px; border: 1px solid rgba(255,69,58,0.3); background: rgba(255,69,58,0.1); color: #ff6961; font-size: 0.95rem; font-weight: 600; border-radius: 14px; cursor: pointer; transition: 0.2s; }
-        .btn-danger-zone:active { transform: scale(0.98); }
         .empty-state-text { color: rgba(255,255,255,0.6); font-size: 1rem; text-align: center; padding: 60px 20px; line-height: 1.5; }
     </style>
 </head>
@@ -265,21 +260,16 @@
         </div>
 
         <div class="header-area">
-            <h1 class="brand-title">Danh's Vocabulary</h1>
+            <h1 class="brand-title">Danh's Flashcard</h1>
             <div class="header-actions">
-    <!-- Nút sang trang Ngữ pháp -->
-    <button class="btn-icon-trigger" onclick="window.location.href='grammar.html'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        Ngữ pháp
-    </button>
-    <button class="btn-icon-trigger" onclick="openStatsModal()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-    </button>
-    <button class="btn-icon-trigger" onclick="openAddWordModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        Thêm từ
-    </button>
-</div>
+                <button class="btn-icon-trigger" onclick="window.location.href='grammar.html'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    Ngữ pháp
+                </button>
+                <button class="btn-icon-trigger" onclick="openStatsModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                </button>
+            </div>
         </div>
         
         <div class="segmented-wrapper">
@@ -288,7 +278,6 @@
                 <button class="segment-btn" id="seg-intermediate" onclick="switchCategory('intermediate')">Trung cấp</button>
                 <button class="segment-btn" id="seg-advanced" onclick="switchCategory('advanced')">Nâng cao</button>
                 <button class="segment-btn" id="seg-toeic" onclick="switchCategory('toeic')">TOEIC 700</button>
-                <button class="segment-btn" id="seg-custom" onclick="switchCategory('custom')">Sổ tay riêng</button>
                 <button class="segment-btn" id="seg-review" onclick="switchCategory('review')">Ôn tập (0)</button>
             </div>
         </div>
@@ -374,26 +363,6 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-add-word" onclick="closeModalViaOverlay(event, 'modal-add-word')">
-        <div class="modal-sheet">
-            <div class="modal-handle"></div>
-            <div class="modal-header">
-                <button class="btn-nav" style="color: rgba(255,255,255,0.6);" onclick="closeModal('modal-add-word')">Hủy</button>
-                <div class="modal-title">Thêm từ vựng riêng</div>
-                <button class="btn-nav" style="color:#00f2fe; font-weight:700" onclick="saveNewWord()">Lưu</button>
-            </div>
-            <div class="input-group">
-                <div class="input-row"><label>Từ mới</label><input type="text" id="txt-word" placeholder="Ví dụ: Adapt"></div>
-                <div class="input-row"><label>Phiên âm</label><input type="text" id="txt-ipa" placeholder="/əˈdæpt/"></div>
-                <div class="input-row"><label>Loại từ</label><input type="text" id="txt-pos" placeholder="noun / verb / adj / adv..."></div>
-                <div class="input-row"><label>Định nghĩa</label><input type="text" id="txt-def-en" placeholder="To change something to suit a new situation."></div>
-                <div class="input-row"><label>Nghĩa Việt</label><input type="text" id="txt-mean-vi" placeholder="Thích nghi, thích ứng"></div>
-                <div class="input-row"><label>Ví dụ</label><input type="text" id="txt-example" placeholder="It takes time to adapt to a new country."></div>
-            </div>
-            <button class="btn-danger-zone" onclick="clearAllCustomWords()">Xóa toàn bộ kho từ riêng</button>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="modal-auth" onclick="closeModalViaOverlay(event, 'modal-auth')">
         <div class="modal-sheet">
             <div class="modal-handle"></div>
@@ -462,7 +431,7 @@
             ]
         };
 
-        const database = { elementary: [], intermediate: [], advanced: [], toeic: [], custom: [], review: [] };
+        const database = { elementary: [], intermediate: [], advanced: [], toeic: [], review: [] };
 
         function boostDatabase() {
             const categories = ['elementary', 'intermediate', 'advanced', 'toeic'];
@@ -520,11 +489,9 @@
 
         function loadUserData() {
             if (currentUser && usersDB[currentUser]) {
-                database.custom = usersDB[currentUser].customWords || [];
                 reviewList = usersDB[currentUser].reviewList || [];
                 learnedList = usersDB[currentUser].learnedList || [];
             } else {
-                database.custom = JSON.parse(localStorage.getItem('c_words_g')) || [];
                 reviewList = JSON.parse(localStorage.getItem('r_list_g')) || [];
                 learnedList = JSON.parse(localStorage.getItem('l_list_g')) || [];
             }
@@ -544,7 +511,7 @@
         }
 
         function buildReviewCategory() {
-            const allWords = [...database.elementary, ...database.intermediate, ...database.advanced, ...database.toeic, ...database.custom];
+            const allWords = [...database.elementary, ...database.intermediate, ...database.advanced, ...database.toeic];
             database.review = allWords.filter(item => reviewList.includes(item.id));
             document.getElementById('seg-review').innerText = `Ôn tập (${database.review.length})`;
             if (currentCategory === 'review') flashcards = [...database.review];
@@ -633,10 +600,9 @@
         function resetGame() { currentIndex = 0; correctCount = 0; wrongCount = 0; document.getElementById('correct-count').innerText = 0; document.getElementById('wrong-count').innerText = 0; updateCard(); }
         function shuffleCards() { flashcards.sort(() => Math.random() - 0.5); resetGame(); }
 
-        function openAddWordModal() { document.getElementById('modal-add-word').classList.add('is-visible'); }
         function openAuthModal() { document.getElementById('modal-auth').classList.add('is-visible'); }
         function openStatsModal() {
-            const allWords = [...database.elementary, ...database.intermediate, ...database.advanced, ...database.toeic, ...database.custom];
+            const allWords = [...database.elementary, ...database.intermediate, ...database.advanced, ...database.toeic];
             const total = allWords.length;
             const correctTotal = learnedList.filter(id => allWords.some(w => w.id === id)).length;
             const reviewTotal = reviewList.filter(id => allWords.some(w => w.id === id)).length;
@@ -657,29 +623,6 @@
         function closeModal(id) { document.getElementById(id).classList.remove('is-visible'); }
         function closeModalViaOverlay(e, id) { if (e.target.classList.contains('modal-overlay')) closeModal(id); }
 
-        function saveNewWord() {
-            const w = document.getElementById('txt-word').value.trim();
-            const vi = document.getElementById('txt-mean-vi').value.trim();
-            if (!w || !vi) return alert("Vui lòng nhập từ mới và nghĩa tiếng Việt.");
-            const newObj = {
-                id: "c_" + Date.now(), word: w, ipa: document.getElementById('txt-ipa').value.trim() || "/.../",
-                defEn: document.getElementById('txt-def-en').value.trim() || "No definition.", meanVi: vi,
-                example: document.getElementById('txt-example').value.trim() || "No example provided.",
-                pos: document.getElementById('txt-pos').value.trim(),
-                image: ""
-            };
-            if (currentUser && usersDB[currentUser]) { usersDB[currentUser].customWords.push(newObj); localStorage.setItem('f_users', JSON.stringify(usersDB)); }
-            else { database.custom.push(newObj); localStorage.setItem('c_words_g', JSON.stringify(database.custom)); }
-            loadUserData(); closeModal('modal-add-word'); switchCategory('custom');
-        }
-
-        function clearAllCustomWords() {
-            if (confirm("Kích hoạt chế độ xóa toàn bộ kho từ riêng?")) {
-                if (currentUser) usersDB[currentUser].customWords = []; else localStorage.removeItem('c_words_g');
-                saveDataSync(); loadUserData(); closeModal('modal-add-word'); switchCategory('custom');
-            }
-        }
-
         function updateAuthUI() {
             const lbl = document.getElementById('lbl-user-status'); const btn = document.getElementById('btn-auth-action');
             if (currentUser) { lbl.innerHTML = `Tài khoản: <span>${currentUser}</span>`; btn.innerText = "Đăng xuất"; btn.className = "btn-auth-trigger logout"; btn.onclick = logout; }
@@ -695,7 +638,7 @@
             if (!e || p.length < 6) return alert("Kiểm tra lại định dạng email và mật khẩu (tối thiểu 6 ký tự).");
             if (authMode === 'register') {
                 if (usersDB[e]) return alert("Email này đã được đăng ký.");
-                usersDB[e] = { password: p, customWords: [], reviewList: [], learnedList: [] };
+                usersDB[e] = { password: p, reviewList: [], learnedList: [] };
                 localStorage.setItem('f_users', JSON.stringify(usersDB)); alert("Thiết lập tài khoản thành công!"); toggleAuthMode();
             } else {
                 if (!usersDB[e] || usersDB[e].password !== p) return alert("Sai thông tin xác thực.");
