@@ -3,216 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ngữ Pháp Cơ Bản — Liquid Glass iOS 26</title>
+    <title>12 Thì Tiếng Anh — Liquid Glass iOS 26</title>
     <style>
         /* =========================================
-           LIQUID GLASS iOS 26 - BASE STYLES
+           LIQUID GLASS iOS 26 - CORE STYLES
            ========================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body {
-            background-color: #050505;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #ffffff;
-            padding: 20px 16px;
-            position: relative;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: #050505; min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: #ffffff; padding: 20px 16px; position: relative; overflow-x: hidden; }
 
         /* FLOATING LIQUID ORBS */
-        .bg-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-        }
-        .orb-1 {
-            width: 350px; height: 350px; background: #ff2a5f;
-            top: -50px; left: -100px;
-            animation: float 14s infinite alternate ease-in-out;
-        }
-        .orb-2 {
-            width: 450px; height: 450px; background: #00f2fe;
-            bottom: -100px; right: -150px;
-            animation: float 18s infinite alternate-reverse ease-in-out;
-        }
-        .orb-3 {
-            width: 300px; height: 300px; background: #8a2be2;
-            top: 40%; left: 50%; transform: translateX(-50%);
-            animation: float 12s infinite alternate ease-in-out;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 60px) scale(1.1); }
-        }
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.6; }
+        .orb-1 { width: 350px; height: 350px; background: #ff2a5f; top: -50px; left: -100px; animation: float 14s infinite alternate ease-in-out; }
+        .orb-2 { width: 450px; height: 450px; background: #00f2fe; bottom: -100px; right: -150px; animation: float 18s infinite alternate-reverse ease-in-out; }
+        .orb-3 { width: 300px; height: 300px; background: #8a2be2; top: 40%; left: 50%; transform: translateX(-50%); animation: float 12s infinite alternate ease-in-out; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 60px) scale(1.1); } }
 
         /* GLOBAL GLASSMIXIN */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-        }
+        .glass-panel { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25); }
 
         /* HEADER AREA */
-        .header-area {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            margin-top: 10px;
-            z-index: 1;
-        }
+        .header-area { width: 100%; max-width: 440px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; margin-top: 10px; z-index: 1; }
         h1.brand-title { color: #ffffff; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px; }
-        .btn-icon-trigger {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); 
-            color: #ffffff; font-size: 0.9rem; font-weight: 500; cursor: pointer; 
-            display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            transition: 0.2s;
-        }
+        .btn-icon-trigger { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: 0.2s; }
         .btn-icon-trigger:active { transform: scale(0.95); }
 
-        /* GRAMMAR CONTAINER & CARDS */
-        .grammar-container {
-            width: 100%;
-            max-width: 500px;
-            z-index: 1;
-            padding-bottom: 40px;
-        }
+        /* LIST OF TENSES */
+        .tense-list-container { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 14px; z-index: 1; margin-bottom: 40px; }
+        .tense-item-btn { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; padding: 22px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .tense-item-btn:active { transform: scale(0.96); background: rgba(255,255,255,0.12); }
+        .tense-item-info { display: flex; flex-direction: column; gap: 4px; }
+        .tense-item-title { font-size: 1.25rem; font-weight: 800; color: #ffffff; }
+        .tense-item-sub { font-size: 0.9rem; color: #00f2fe; font-weight: 600; letter-spacing: 0.5px; }
+        .chevron-icon { color: rgba(255,255,255,0.4); transition: 0.2s; }
+        .tense-item-btn:hover .chevron-icon { color: #00f2fe; transform: translateX(4px); }
 
-        .tense-card {
-            border-radius: 20px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+        /* MODALS SYSTEM */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 1000; }
+        .modal-overlay.is-visible { opacity: 1; pointer-events: auto; }
+        .modal-sheet { width: 100%; max-width: 480px; height: 88vh; background: rgba(20, 20, 20, 0.75); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-top: 1px solid rgba(255,255,255,0.2); box-shadow: 0 -10px 40px rgba(0,0,0,0.4); border-top-left-radius: 28px; border-top-right-radius: 28px; padding: 24px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; }
+        .modal-overlay.is-visible .modal-sheet { transform: translateY(0); }
+        .modal-handle { width: 40px; height: 5px; background: rgba(255,255,255,0.3); border-radius: 3px; margin: 0 auto 20px auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-nav { background: none; border: none; font-size: 1rem; font-weight: 500; cursor: pointer; padding: 8px; transition: opacity 0.2s; }
+        .modal-title { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
 
-        .tense-header {
-            padding: 18px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            background: rgba(255,255,255,0.02);
-            transition: background 0.3s;
-        }
-        .tense-header:hover { background: rgba(255,255,255,0.05); }
+        /* FLASHCARD WRAPPER INSIDE MODAL */
+        .flashcard-wrapper { perspective: 1200px; width: 100%; flex-grow: 1; min-height: 400px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 28px; cursor: pointer; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 28px; display: flex; flex-direction: column; padding: 24px; overflow-y: auto; scrollbar-width: none; }
+        .card-face::-webkit-scrollbar { display: none; }
+        .card-back { transform: rotateY(180deg); }
+
+        /* FLASHCARD CONTENT STYLING */
+        .tense-face-title { font-size: 1.6rem; font-weight: 800; color: #00f2fe; text-align: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .back-section { margin-bottom: 20px; width: 100%; }
+        .back-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 8px; }
+        .section-text { font-size: 1.15rem; line-height: 1.5; color: rgba(255,255,255,0.95); }
+        .formula-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 14px; font-family: "SF Mono", Consolas, monospace; color: #32d74b; font-size: 1.15rem; line-height: 1.8; }
         
-        .tense-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .tense-number {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: rgba(0,242,254,0.15);
-            color: #00f2fe;
-            border-radius: 50%;
-            font-size: 0.85rem;
-            font-weight: 800;
-        }
-
-        .icon-toggle {
-            transition: transform 0.3s ease;
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Tense Content (Hidden by default) */
-        .tense-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            padding: 0 20px;
-            opacity: 0;
-        }
-
-        /* Active State */
-        .tense-card.active .tense-content {
-            max-height: 800px; /* Số lớn để chứa nội dung */
-            padding: 0 20px 20px 20px;
-            opacity: 1;
-        }
-        .tense-card.active .icon-toggle {
-            transform: rotate(180deg);
-            color: #00f2fe;
-        }
-        .tense-card.active .tense-header {
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            margin-bottom: 16px;
-        }
-
-        /* Inner Sections */
-        .section-block {
-            margin-bottom: 16px;
-        }
-        .section-block:last-child { margin-bottom: 0; }
-        .section-title {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: rgba(255,255,255,0.5);
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .section-text {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: rgba(255,255,255,0.9);
-        }
+        /* 3 EXAMPLES STYLING */
+        .example-box { background: rgba(0,242,254,0.05); border-left: 3px solid #00f2fe; padding: 16px; border-radius: 0 14px 14px 0; }
+        .example-list { display: flex; flex-direction: column; gap: 12px; }
+        .ex-item { display: flex; flex-direction: column; }
+        .ex-en { font-size: 1.1rem; color: #ffffff; font-style: italic; }
+        .ex-vi { font-size: 0.95rem; color: rgba(255,255,255,0.5); margin-top: 4px; padding-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.15); }
+        .ex-item:last-child .ex-vi { border-bottom: none; padding-bottom: 0; }
+        .sym-plus { color: #32d74b; font-weight: 800; font-style: normal; margin-right: 6px; }
+        .sym-minus { color: #ff453a; font-weight: 800; font-style: normal; margin-right: 6px; }
+        .sym-ques { color: #00f2fe; font-weight: 800; font-style: normal; margin-right: 6px; }
+        .highlight-v { color: #ff9f0a; font-weight: 700; font-style: normal; }
         
-        .formula-box {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 12px;
-            font-family: "SF Mono", Consolas, monospace;
-            color: #32d74b;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .example-box {
-            background: rgba(0,242,254,0.05);
-            border-left: 3px solid #00f2fe;
-            padding: 12px 14px;
-            border-radius: 0 12px 12px 0;
-            font-size: 1rem;
-            font-style: italic;
-            color: #ffffff;
-            margin-top: 8px;
-        }
-        .example-trans {
-            display: block;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            font-style: normal;
-            margin-top: 4px;
-        }
-        .highlight { color: #00f2fe; font-weight: 600; }
-        .highlight-v { color: #ff9f0a; font-weight: 600; }
+        .hint { color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center; margin-top: auto; padding-top: 20px; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -222,195 +84,255 @@
     <div class="bg-orb orb-3"></div>
 
     <div class="header-area">
-        <h1 class="brand-title">Ngữ Pháp Nền Tảng</h1>
+        <h1 class="brand-title">Toàn Tập 12 Thì</h1>
         <button class="btn-icon-trigger" onclick="window.location.href='flashcard.html'">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            Quay lại
+            Flashcard
         </button>
     </div>
 
-    <div class="grammar-container">
+    <div class="tense-list-container" id="tense-list"></div>
 
-        <!-- 1. Hiện tại đơn -->
-        <div class="tense-card glass-panel" onclick="toggleCard(this)">
-            <div class="tense-header">
-                <div class="tense-name"><span class="tense-number">1</span>Hiện tại đơn (Present Simple)</div>
-                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    <div class="modal-overlay" id="modal-grammar" onclick="closeModalViaOverlay(event, 'modal-grammar')">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-header">
+                <button class="btn-nav" style="color: rgba(255,255,255,0.6);" onclick="closeModal('modal-grammar')">Đóng</button>
+                <div class="modal-title">Chi tiết Thì</div>
+                <div style="width: 40px;"></div>
             </div>
-            <div class="tense-content" onclick="event.stopPropagation()">
-                <div class="section-block">
-                    <div class="section-title">Cách dùng</div>
-                    <div class="section-text">Diễn tả sự thật hiển nhiên, chân lý, thói quen ở hiện tại, hoặc các tình trạng ổn định, kéo dài. Thường dùng để miêu tả biểu đồ, xu hướng mang tính tổng quát.</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Công thức</div>
-                    <div class="formula-box">
-                        (+) S + V(s/es) + O<br>
-                        (-) S + do/does + not + V + O<br>
-                        (?) Do/Does + S + V + O?
+            
+            <div class="flashcard-wrapper">
+                <div class="flashcard" id="grammar-flashcard" onclick="flipCard()">
+                    
+                    <div class="card-face card-front glass-panel">
+                        <div class="tense-face-title" id="lbl-front-title">-</div>
+                        <div class="back-section">
+                            <div class="back-title">Cách dùng (Usage)</div>
+                            <div class="section-text" id="lbl-usage">-</div>
+                        </div>
+                        <div class="back-section">
+                            <div class="back-title">Dấu hiệu nhận biết</div>
+                            <div class="section-text" id="lbl-signals" style="color: #ff9f0a; font-weight: 600;">-</div>
+                        </div>
+                        <div class="hint">👉 Chạm vào thẻ để lật xem Công thức & Ví dụ</div>
                     </div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Dấu hiệu nhận biết</div>
-                    <div class="section-text">Always, usually, frequently, often, generally, rarely, every day/year...</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Ví dụ học thuật</div>
-                    <div class="example-box">
-                        The line graph <span class="highlight-v">illustrates</span> the proportion of energy consumption in three different sectors.
-                        <span class="example-trans">Biểu đồ đường minh họa tỷ lệ tiêu thụ năng lượng ở ba lĩnh vực khác nhau.</span>
+                    
+                    <div class="card-face card-back glass-panel">
+                        <div class="back-section">
+                            <div class="back-title">Công thức (Formula)</div>
+                            <div class="formula-box" id="lbl-formula">-</div>
+                        </div>
+                        <div class="back-section">
+                            <div class="back-title">Ví dụ học thuật</div>
+                            <div class="example-box">
+                                <div class="example-list" id="lbl-examples">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="hint">👉 Chạm vào thẻ để lật về mặt trước</div>
                     </div>
+
                 </div>
             </div>
+            
         </div>
-
-        <!-- 2. Hiện tại tiếp diễn -->
-        <div class="tense-card glass-panel" onclick="toggleCard(this)">
-            <div class="tense-header">
-                <div class="tense-name"><span class="tense-number">2</span>Hiện tại tiếp diễn (Present Cont.)</div>
-                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-            <div class="tense-content" onclick="event.stopPropagation()">
-                <div class="section-block">
-                    <div class="section-title">Cách dùng</div>
-                    <div class="section-text">Diễn tả hành động đang xảy ra ngay lúc nói, hoặc một xu hướng, sự thay đổi đang diễn ra ở thời điểm hiện tại.</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Công thức</div>
-                    <div class="formula-box">
-                        (+) S + am/is/are + V-ing<br>
-                        (-) S + am/is/are + not + V-ing<br>
-                        (?) Am/Is/Are + S + V-ing?
-                    </div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Dấu hiệu nhận biết</div>
-                    <div class="section-text">Now, right now, at present, currently, nowadays...</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Ví dụ học thuật</div>
-                    <div class="example-box">
-                        Currently, the number of international students <span class="highlight-v">is increasing</span> rapidly.
-                        <span class="example-trans">Hiện tại, số lượng sinh viên quốc tế đang gia tăng nhanh chóng.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Quá khứ đơn -->
-        <div class="tense-card glass-panel" onclick="toggleCard(this)">
-            <div class="tense-header">
-                <div class="tense-name"><span class="tense-number">3</span>Quá khứ đơn (Past Simple)</div>
-                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-            <div class="tense-content" onclick="event.stopPropagation()">
-                <div class="section-block">
-                    <div class="section-title">Cách dùng</div>
-                    <div class="section-text">Diễn tả hành động đã xảy ra và kết thúc hoàn toàn trong quá khứ. Đặc biệt quan trọng khi phân tích dữ liệu thuộc các năm trong quá khứ.</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Công thức</div>
-                    <div class="formula-box">
-                        (+) S + V2/ed + O<br>
-                        (-) S + did + not + V(nguyên thể)<br>
-                        (?) Did + S + V(nguyên thể)?
-                    </div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Dấu hiệu nhận biết</div>
-                    <div class="section-text">Yesterday, last (year/month), in 1999, the previous year, a decade ago...</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Ví dụ học thuật</div>
-                    <div class="example-box">
-                        Between 2000 and 2010, the population of the city <span class="highlight-v">experienced</span> a significant decline.
-                        <span class="example-trans">Trong khoảng từ năm 2000 đến 2010, dân số của thành phố đã trải qua một sự sụt giảm đáng kể.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Hiện tại hoàn thành -->
-        <div class="tense-card glass-panel" onclick="toggleCard(this)">
-            <div class="tense-header">
-                <div class="tense-name"><span class="tense-number">4</span>Hiện tại hoàn thành (Present Perfect)</div>
-                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-            <div class="tense-content" onclick="event.stopPropagation()">
-                <div class="section-block">
-                    <div class="section-title">Cách dùng</div>
-                    <div class="section-text">Diễn tả hành động bắt đầu trong quá khứ, kéo dài đến hiện tại và có thể tiếp tục ở tương lai. Thường dùng để nêu các tác động, nguyên nhân dẫn đến hiện trạng ngày nay.</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Công thức</div>
-                    <div class="formula-box">
-                        (+) S + have/has + V3/ed<br>
-                        (-) S + have/has + not + V3/ed<br>
-                        (?) Have/Has + S + V3/ed?
-                    </div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Dấu hiệu nhận biết</div>
-                    <div class="section-text">Since, for, recently, so far, over the last few decades...</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Ví dụ học thuật</div>
-                    <div class="example-box">
-                        Over the last few decades, technological advancements <span class="highlight-v">have transformed</span> the way people communicate.
-                        <span class="example-trans">Trong vài thập kỷ qua, những tiến bộ công nghệ đã làm thay đổi cách con người giao tiếp.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. Tương lai đơn -->
-        <div class="tense-card glass-panel" onclick="toggleCard(this)">
-            <div class="tense-header">
-                <div class="tense-name"><span class="tense-number">5</span>Tương lai đơn (Future Simple)</div>
-                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </div>
-            <div class="tense-content" onclick="event.stopPropagation()">
-                <div class="section-block">
-                    <div class="section-title">Cách dùng</div>
-                    <div class="section-text">Diễn đạt một quyết định tại thời điểm nói, lời hứa, hoặc một dự đoán về các xu hướng, số liệu trong tương lai.</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Công thức</div>
-                    <div class="formula-box">
-                        (+) S + will + V(nguyên thể)<br>
-                        (-) S + will + not (won't) + V<br>
-                        (?) Will + S + V?
-                    </div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Dấu hiệu nhận biết</div>
-                    <div class="section-text">In the future, tomorrow, next (year/month), projected to, predicted to by 2050...</div>
-                </div>
-                <div class="section-block">
-                    <div class="section-title">Ví dụ học thuật</div>
-                    <div class="example-box">
-                        It is predicted that the use of renewable energy <span class="highlight-v">will rise</span> significantly by 2030.
-                        <span class="example-trans">Người ta dự đoán rằng việc sử dụng năng lượng tái tạo sẽ tăng đáng kể vào năm 2030.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        function toggleCard(card) {
-            // Đóng tất cả các thẻ đang mở khác (nếu muốn chỉ 1 thẻ mở tại 1 thời điểm)
-            const allCards = document.querySelectorAll('.tense-card');
-            allCards.forEach(c => {
-                if (c !== card && c.classList.contains('active')) {
-                    c.classList.remove('active');
-                }
-            });
-            
-            // Bật/tắt thẻ hiện tại được click
-            card.classList.toggle('active');
+        const tenses = [
+            {
+                id: 1, nameVi: "Hiện tại đơn", nameEn: "Present Simple",
+                usage: "Diễn tả sự thật hiển nhiên, chân lý, thói quen ở hiện tại, hoặc các tình trạng ổn định kéo dài. Thường dùng để miêu tả biểu đồ, xu hướng tổng quát.",
+                signals: "Always, usually, frequently, generally, rarely, every day/year...",
+                formula: "(+) S + V(s/es) + O<br>(-) S + do/does + not + V<br>(?) Do/Does + S + V + O?",
+                examples: [
+                    { type: "+", en: "The proportion of elderly people <span class='highlight-v'>increases</span> steadily.", vi: "Tỷ lệ người cao tuổi tăng đều đặn." },
+                    { type: "-", en: "This method <span class='highlight-v'>does not require</span> much effort.", vi: "Phương pháp này không đòi hỏi nhiều nỗ lực." },
+                    { type: "?", en: "<span class='highlight-v'>Does</span> education <span class='highlight-v'>play</span> a crucial role?", vi: "Giáo dục có đóng vai trò cốt lõi không?" }
+                ]
+            },
+            {
+                id: 2, nameVi: "Hiện tại tiếp diễn", nameEn: "Present Continuous",
+                usage: "Diễn tả hành động đang xảy ra ngay lúc nói, hoặc một xu hướng, sự thay đổi đang diễn ra ở thời điểm hiện tại.",
+                signals: "Now, right now, at present, currently, nowadays...",
+                formula: "(+) S + am/is/are + V-ing<br>(-) S + am/is/are + not + V-ing<br>(?) Am/Is/Are + S + V-ing?",
+                examples: [
+                    { type: "+", en: "Global temperatures <span class='highlight-v'>are rising</span> alarmingly.", vi: "Nhiệt độ toàn cầu đang tăng lên đáng báo động." },
+                    { type: "-", en: "The company <span class='highlight-v'>is not hiring</span> new staff currently.", vi: "Công ty hiện không tuyển thêm nhân sự mới." },
+                    { type: "?", en: "<span class='highlight-v'>Are</span> people <span class='highlight-v'>becoming</span> more dependent on smartphones?", vi: "Mọi người có đang trở nên phụ thuộc hơn vào điện thoại thông minh không?" }
+                ]
+            },
+            {
+                id: 3, nameVi: "Hiện tại hoàn thành", nameEn: "Present Perfect",
+                usage: "Diễn tả hành động bắt đầu trong quá khứ, kéo dài đến hiện tại. Thường dùng để nêu các tác động, nguyên nhân dẫn đến hiện trạng ngày nay.",
+                signals: "Since, for, recently, so far, over the last few decades, up to now...",
+                formula: "(+) S + have/has + V3/ed<br>(-) S + have/has + not + V3/ed<br>(?) Have/Has + S + V3/ed?",
+                examples: [
+                    { type: "+", en: "Technology <span class='highlight-v'>has completely changed</span> our lives.", vi: "Công nghệ đã thay đổi hoàn toàn cuộc sống của chúng ta." },
+                    { type: "-", en: "The government <span class='highlight-v'>has not solved</span> the pollution issue.", vi: "Chính phủ vẫn chưa giải quyết được vấn đề ô nhiễm." },
+                    { type: "?", en: "<span class='highlight-v'>Have</span> researchers <span class='highlight-v'>found</span> an alternative energy source?", vi: "Các nhà nghiên cứu đã tìm ra nguồn năng lượng thay thế chưa?" }
+                ]
+            },
+            {
+                id: 4, nameVi: "Hiện tại hoàn thành tiếp diễn", nameEn: "Present Perfect Cont.",
+                usage: "Nhấn mạnh quá trình và thời gian kéo dài của một hành động bắt đầu trong quá khứ và vẫn đang tiếp diễn ở hiện tại.",
+                signals: "For (a long time), since, all day/week, lately, recently...",
+                formula: "(+) S + have/has + been + V-ing<br>(-) S + have/has + not + been + V-ing<br>(?) Have/Has + S + been + V-ing?",
+                examples: [
+                    { type: "+", en: "Scientists <span class='highlight-v'>have been studying</span> this phenomenon for decades.", vi: "Các nhà khoa học đã và đang nghiên cứu hiện tượng này trong nhiều thập kỷ." },
+                    { type: "-", en: "The factory <span class='highlight-v'>has not been operating</span> efficiently lately.", vi: "Gần đây nhà máy đã không hoạt động hiệu quả." },
+                    { type: "?", en: "How long <span class='highlight-v'>have</span> they <span class='highlight-v'>been developing</span> this software?", vi: "Họ đã phát triển phần mềm này bao lâu rồi?" }
+                ]
+            },
+            {
+                id: 5, nameVi: "Quá khứ đơn", nameEn: "Past Simple",
+                usage: "Diễn tả hành động đã xảy ra và kết thúc hoàn toàn trong quá khứ. Đặc biệt quan trọng khi phân tích biểu đồ có các mốc thời gian quá khứ.",
+                signals: "Yesterday, last (year/month), in 1999, a decade ago...",
+                formula: "(+) S + V2/ed + O<br>(-) S + did + not + V(nguyên)<br>(?) Did + S + V(nguyên)?",
+                examples: [
+                    { type: "+", en: "The overall sales <span class='highlight-v'>dropped</span> significantly in 2020.", vi: "Tổng doanh số đã giảm mạnh vào năm 2020." },
+                    { type: "-", en: "The policy <span class='highlight-v'>did not yield</span> the expected results.", vi: "Chính sách đã không mang lại kết quả như mong đợi." },
+                    { type: "?", en: "<span class='highlight-v'>Did</span> the population <span class='highlight-v'>experience</span> a downward trend?", vi: "Dân số có trải qua một xu hướng giảm không?" }
+                ]
+            },
+            {
+                id: 6, nameVi: "Quá khứ tiếp diễn", nameEn: "Past Continuous",
+                usage: "Diễn tả hành động đang xảy ra tại một thời điểm cụ thể trong quá khứ, hoặc hai hành động xảy ra song song.",
+                signals: "At that time, at 8 PM yesterday, while, when...",
+                formula: "(+) S + was/were + V-ing<br>(-) S + was/were + not + V-ing<br>(?) Was/Were + S + V-ing?",
+                examples: [
+                    { type: "+", en: "At that time, the economy <span class='highlight-v'>was recovering</span> slowly.", vi: "Vào thời điểm đó, nền kinh tế đang phục hồi chậm chạp." },
+                    { type: "-", en: "The students <span class='highlight-v'>were not paying</span> attention during the lecture.", vi: "Các sinh viên đã không chú ý trong suốt bài giảng." },
+                    { type: "?", en: "<span class='highlight-v'>Were</span> citizens <span class='highlight-v'>protesting</span> against the new law?", vi: "Công dân lúc đó có đang biểu tình phản đối luật mới không?" }
+                ]
+            },
+            {
+                id: 7, nameVi: "Quá khứ hoàn thành", nameEn: "Past Perfect",
+                usage: "Diễn tả một hành động xảy ra trước một hành động khác hoặc trước một thời điểm nhất định trong quá khứ.",
+                signals: "By 1990, before, after, by the time, as soon as...",
+                formula: "(+) S + had + V3/ed<br>(-) S + had + not + V3/ed<br>(?) Had + S + V3/ed?",
+                examples: [
+                    { type: "+", en: "By 1990, the population <span class='highlight-v'>had doubled</span>.", vi: "Tính đến năm 1990, dân số đã tăng gấp đôi." },
+                    { type: "-", en: "They <span class='highlight-v'>had not realized</span> the danger before it happened.", vi: "Họ đã không nhận ra mối nguy hiểm trước khi nó xảy ra." },
+                    { type: "?", en: "<span class='highlight-v'>Had</span> the inflation rate <span class='highlight-v'>peaked</span> before the crisis?", vi: "Tỷ lệ lạm phát có đạt đỉnh trước cuộc khủng hoảng không?" }
+                ]
+            },
+            {
+                id: 8, nameVi: "Quá khứ hoàn thành tiếp diễn", nameEn: "Past Perfect Cont.",
+                usage: "Nhấn mạnh khoảng thời gian kéo dài của một hành động đã xảy ra trước một hành động khác trong quá khứ.",
+                signals: "For hours before, until then, prior to that time...",
+                formula: "(+) S + had + been + V-ing<br>(-) S + had + not + been + V-ing<br>(?) Had + S + been + V-ing?",
+                examples: [
+                    { type: "+", en: "The team <span class='highlight-v'>had been working</span> on the project for months before it failed.", vi: "Nhóm đã làm việc cho dự án nhiều tháng trước khi nó thất bại." },
+                    { type: "-", en: "She <span class='highlight-v'>had not been feeling</span> well before the exam.", vi: "Cô ấy đã cảm thấy không khỏe từ trước kỳ thi." },
+                    { type: "?", en: "<span class='highlight-v'>Had</span> they <span class='highlight-v'>been using</span> outdated methods for a long time?", vi: "Có phải họ đã sử dụng các phương pháp lỗi thời trong một thời gian dài không?" }
+                ]
+            },
+            {
+                id: 9, nameVi: "Tương lai đơn", nameEn: "Future Simple",
+                usage: "Diễn đạt một quyết định tại thời điểm nói, hoặc một dự đoán về các xu hướng, số liệu trong tương lai.",
+                signals: "In the future, next (year/month), projected to, predicted to...",
+                formula: "(+) S + will + V(nguyên)<br>(-) S + will + not (won't) + V<br>(?) Will + S + V?",
+                examples: [
+                    { type: "+", en: "The demand for renewable energy <span class='highlight-v'>will increase</span>.", vi: "Nhu cầu về năng lượng tái tạo sẽ tăng lên." },
+                    { type: "-", en: "Traditional media <span class='highlight-v'>will not disappear</span> completely.", vi: "Truyền thông truyền thống sẽ không biến mất hoàn toàn." },
+                    { type: "?", en: "<span class='highlight-v'>Will</span> automation <span class='highlight-v'>replace</span> manual labor?", vi: "Tự động hóa có thay thế lao động chân tay không?" }
+                ]
+            },
+            {
+                id: 10, nameVi: "Tương lai tiếp diễn", nameEn: "Future Continuous",
+                usage: "Diễn tả hành động sẽ đang xảy ra tại một thời điểm cụ thể trong tương lai.",
+                signals: "By this time next year, at 8 AM tomorrow...",
+                formula: "(+) S + will + be + V-ing<br>(-) S + will + not + be + V-ing<br>(?) Will + S + be + V-ing?",
+                examples: [
+                    { type: "+", en: "By this time next year, I <span class='highlight-v'>will be studying</span> abroad.", vi: "Vào thời điểm này năm sau, tôi sẽ đang du học." },
+                    { type: "-", en: "We <span class='highlight-v'>will not be using</span> fossil fuels extensively in 2050.", vi: "Chúng ta sẽ không sử dụng rộng rãi nhiên liệu hóa thạch vào năm 2050." },
+                    { type: "?", en: "<span class='highlight-v'>Will</span> people <span class='highlight-v'>be living</span> on Mars in the next century?", vi: "Con người sẽ sống trên sao Hỏa trong thế kỷ tới chứ?" }
+                ]
+            },
+            {
+                id: 11, nameVi: "Tương lai hoàn thành", nameEn: "Future Perfect",
+                usage: "Diễn tả một hành động sẽ hoàn thành trước một thời điểm hoặc một hành động khác trong tương lai.",
+                signals: "By 2030, by the end of this year, by the time...",
+                formula: "(+) S + will + have + V3/ed<br>(-) S + will + not + have + V3/ed<br>(?) Will + S + have + V3/ed?",
+                examples: [
+                    { type: "+", en: "By 2030, the government <span class='highlight-v'>will have completed</span> the railway.", vi: "Đến năm 2030, chính phủ sẽ hoàn thành tuyến đường sắt." },
+                    { type: "-", en: "The budget <span class='highlight-v'>will not have run out</span> by the end of the year.", vi: "Ngân sách sẽ không cạn kiệt trước cuối năm." },
+                    { type: "?", en: "<span class='highlight-v'>Will</span> they <span class='highlight-v'>have achieved</span> their goals by then?", vi: "Họ sẽ đạt được mục tiêu của mình vào lúc đó chứ?" }
+                ]
+            },
+            {
+                id: 12, nameVi: "Tương lai hoàn thành tiếp diễn", nameEn: "Future Perfect Cont.",
+                usage: "Nhấn mạnh khoảng thời gian kéo dài của một hành động tính đến một thời điểm trong tương lai.",
+                signals: "By next month ... for 10 years, by the end of ... for ...",
+                formula: "(+) S + will + have + been + V-ing<br>(-) S + will + not + have + been + V-ing<br>(?) Will + S + have + been + V-ing?",
+                examples: [
+                    { type: "+", en: "By next month, we <span class='highlight-v'>will have been living</span> here for ten years.", vi: "Tính đến tháng sau, chúng tôi sẽ sống ở đây được tròn 10 năm." },
+                    { type: "-", en: "He <span class='highlight-v'>will not have been working</span> there long enough to get a pension.", vi: "Anh ấy sẽ không làm việc ở đó đủ lâu để nhận lương hưu." },
+                    { type: "?", en: "<span class='highlight-v'>Will</span> the machine <span class='highlight-v'>have been operating</span> continuously?", vi: "Cỗ máy sẽ chạy liên tục chứ?" }
+                ]
+            }
+        ];
+
+        // Hàm hỗ trợ map loại câu sang CSS class
+        function getSymbolClass(type) {
+            if (type === '+') return 'sym-plus';
+            if (type === '-') return 'sym-minus';
+            return 'sym-ques';
         }
+
+        function renderList() {
+            const listContainer = document.getElementById('tense-list');
+            listContainer.innerHTML = tenses.map((t, index) => `
+                <div class="tense-item-btn" onclick="openTenseModal(${index})">
+                    <div class="tense-item-info">
+                        <div class="tense-item-title">${t.id}. ${t.nameVi}</div>
+                        <div class="tense-item-sub">${t.nameEn}</div>
+                    </div>
+                    <svg class="chevron-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            `).join('');
+        }
+
+        function openTenseModal(index) {
+            const data = tenses[index];
+            
+            document.getElementById('lbl-front-title').innerText = `${data.id}. ${data.nameVi}`;
+            document.getElementById('lbl-usage').innerText = data.usage;
+            document.getElementById('lbl-signals').innerText = data.signals;
+            document.getElementById('lbl-formula').innerHTML = data.formula;
+            
+            // Xử lý render 3 ví dụ
+            const examplesHtml = data.examples.map(ex => `
+                <div class="ex-item">
+                    <div class="ex-en"><span class="${getSymbolClass(ex.type)}">(${ex.type})</span>${ex.en}</div>
+                    <div class="ex-vi">${ex.vi}</div>
+                </div>
+            `).join('');
+            document.getElementById('lbl-examples').innerHTML = examplesHtml;
+            
+            // Reset thẻ về mặt trước & Cuộn lên top
+            const cardFace = document.querySelector('.card-front');
+            const cardBack = document.querySelector('.card-back');
+            cardFace.scrollTop = 0; cardBack.scrollTop = 0;
+            document.getElementById('grammar-flashcard').classList.remove('is-flipped');
+            
+            document.getElementById('modal-grammar').classList.add('is-visible');
+        }
+
+        function flipCard() {
+            document.getElementById('grammar-flashcard').classList.toggle('is-flipped');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('is-visible');
+        }
+        function closeModalViaOverlay(e, id) {
+            if (e.target.classList.contains('modal-overlay')) closeModal(id);
+        }
+
+        renderList();
     </script>
 </body>
 </html>
