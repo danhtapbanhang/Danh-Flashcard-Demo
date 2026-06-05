@@ -608,7 +608,7 @@
             const categories = ['elementary', 'intermediate', 'advanced', 'toeic'];
             categories.forEach(cat => {
                 const baseArr = rawData[cat];
-                for (let i = 1; i <= 100; i++) {
+                for (let i = 1; i <= 1000; i++) {
                     const template = baseArr[(i - 1) % baseArr.length];
                     const parts = template.split('|');
                     database[cat].push({
