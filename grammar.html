@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ngữ Pháp Cơ Bản — Liquid Glass iOS 26</title>
+    <style>
+        /* =========================================
+           LIQUID GLASS iOS 26 - BASE STYLES
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #050505;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+            padding: 20px 16px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* FLOATING LIQUID ORBS */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .orb-1 {
+            width: 350px; height: 350px; background: #ff2a5f;
+            top: -50px; left: -100px;
+            animation: float 14s infinite alternate ease-in-out;
+        }
+        .orb-2 {
+            width: 450px; height: 450px; background: #00f2fe;
+            bottom: -100px; right: -150px;
+            animation: float 18s infinite alternate-reverse ease-in-out;
+        }
+        .orb-3 {
+            width: 300px; height: 300px; background: #8a2be2;
+            top: 40%; left: 50%; transform: translateX(-50%);
+            animation: float 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 60px) scale(1.1); }
+        }
+
+        /* GLOBAL GLASSMIXIN */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        /* HEADER AREA */
+        .header-area {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            margin-top: 10px;
+            z-index: 1;
+        }
+        h1.brand-title { color: #ffffff; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px; }
+        .btn-icon-trigger {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); 
+            color: #ffffff; font-size: 0.9rem; font-weight: 500; cursor: pointer; 
+            display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: 0.2s;
+        }
+        .btn-icon-trigger:active { transform: scale(0.95); }
+
+        /* GRAMMAR CONTAINER & CARDS */
+        .grammar-container {
+            width: 100%;
+            max-width: 500px;
+            z-index: 1;
+            padding-bottom: 40px;
+        }
+
+        .tense-card {
+            border-radius: 20px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tense-header {
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+            transition: background 0.3s;
+        }
+        .tense-header:hover { background: rgba(255,255,255,0.05); }
+        
+        .tense-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tense-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: rgba(0,242,254,0.15);
+            color: #00f2fe;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .icon-toggle {
+            transition: transform 0.3s ease;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Tense Content (Hidden by default) */
+        .tense-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            padding: 0 20px;
+            opacity: 0;
+        }
+
+        /* Active State */
+        .tense-card.active .tense-content {
+            max-height: 800px; /* Số lớn để chứa nội dung */
+            padding: 0 20px 20px 20px;
+            opacity: 1;
+        }
+        .tense-card.active .icon-toggle {
+            transform: rotate(180deg);
+            color: #00f2fe;
+        }
+        .tense-card.active .tense-header {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 16px;
+        }
+
+        /* Inner Sections */
+        .section-block {
+            margin-bottom: 16px;
+        }
+        .section-block:last-child { margin-bottom: 0; }
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .section-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .formula-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 12px;
+            font-family: "SF Mono", Consolas, monospace;
+            color: #32d74b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background: rgba(0,242,254,0.05);
+            border-left: 3px solid #00f2fe;
+            padding: 12px 14px;
+            border-radius: 0 12px 12px 0;
+            font-size: 1rem;
+            font-style: italic;
+            color: #ffffff;
+            margin-top: 8px;
+        }
+        .example-trans {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            font-style: normal;
+            margin-top: 4px;
+        }
+        .highlight { color: #00f2fe; font-weight: 600; }
+        .highlight-v { color: #ff9f0a; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <div class="header-area">
+        <h1 class="brand-title">Ngữ Pháp Nền Tảng</h1>
+        <button class="btn-icon-trigger" onclick="window.location.href='flashcard.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            Quay lại
+        </button>
+    </div>
+
+    <div class="grammar-container">
+
+        <!-- 1. Hiện tại đơn -->
+        <div class="tense-card glass-panel" onclick="toggleCard(this)">
+            <div class="tense-header">
+                <div class="tense-name"><span class="tense-number">1</span>Hiện tại đơn (Present Simple)</div>
+                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="tense-content" onclick="event.stopPropagation()">
+                <div class="section-block">
+                    <div class="section-title">Cách dùng</div>
+                    <div class="section-text">Diễn tả sự thật hiển nhiên, chân lý, thói quen ở hiện tại, hoặc các tình trạng ổn định, kéo dài. Thường dùng để miêu tả biểu đồ, xu hướng mang tính tổng quát.</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Công thức</div>
+                    <div class="formula-box">
+                        (+) S + V(s/es) + O<br>
+                        (-) S + do/does + not + V + O<br>
+                        (?) Do/Does + S + V + O?
+                    </div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Dấu hiệu nhận biết</div>
+                    <div class="section-text">Always, usually, frequently, often, generally, rarely, every day/year...</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Ví dụ học thuật</div>
+                    <div class="example-box">
+                        The line graph <span class="highlight-v">illustrates</span> the proportion of energy consumption in three different sectors.
+                        <span class="example-trans">Biểu đồ đường minh họa tỷ lệ tiêu thụ năng lượng ở ba lĩnh vực khác nhau.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Hiện tại tiếp diễn -->
+        <div class="tense-card glass-panel" onclick="toggleCard(this)">
+            <div class="tense-header">
+                <div class="tense-name"><span class="tense-number">2</span>Hiện tại tiếp diễn (Present Cont.)</div>
+                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="tense-content" onclick="event.stopPropagation()">
+                <div class="section-block">
+                    <div class="section-title">Cách dùng</div>
+                    <div class="section-text">Diễn tả hành động đang xảy ra ngay lúc nói, hoặc một xu hướng, sự thay đổi đang diễn ra ở thời điểm hiện tại.</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Công thức</div>
+                    <div class="formula-box">
+                        (+) S + am/is/are + V-ing<br>
+                        (-) S + am/is/are + not + V-ing<br>
+                        (?) Am/Is/Are + S + V-ing?
+                    </div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Dấu hiệu nhận biết</div>
+                    <div class="section-text">Now, right now, at present, currently, nowadays...</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Ví dụ học thuật</div>
+                    <div class="example-box">
+                        Currently, the number of international students <span class="highlight-v">is increasing</span> rapidly.
+                        <span class="example-trans">Hiện tại, số lượng sinh viên quốc tế đang gia tăng nhanh chóng.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Quá khứ đơn -->
+        <div class="tense-card glass-panel" onclick="toggleCard(this)">
+            <div class="tense-header">
+                <div class="tense-name"><span class="tense-number">3</span>Quá khứ đơn (Past Simple)</div>
+                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="tense-content" onclick="event.stopPropagation()">
+                <div class="section-block">
+                    <div class="section-title">Cách dùng</div>
+                    <div class="section-text">Diễn tả hành động đã xảy ra và kết thúc hoàn toàn trong quá khứ. Đặc biệt quan trọng khi phân tích dữ liệu thuộc các năm trong quá khứ.</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Công thức</div>
+                    <div class="formula-box">
+                        (+) S + V2/ed + O<br>
+                        (-) S + did + not + V(nguyên thể)<br>
+                        (?) Did + S + V(nguyên thể)?
+                    </div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Dấu hiệu nhận biết</div>
+                    <div class="section-text">Yesterday, last (year/month), in 1999, the previous year, a decade ago...</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Ví dụ học thuật</div>
+                    <div class="example-box">
+                        Between 2000 and 2010, the population of the city <span class="highlight-v">experienced</span> a significant decline.
+                        <span class="example-trans">Trong khoảng từ năm 2000 đến 2010, dân số của thành phố đã trải qua một sự sụt giảm đáng kể.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Hiện tại hoàn thành -->
+        <div class="tense-card glass-panel" onclick="toggleCard(this)">
+            <div class="tense-header">
+                <div class="tense-name"><span class="tense-number">4</span>Hiện tại hoàn thành (Present Perfect)</div>
+                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="tense-content" onclick="event.stopPropagation()">
+                <div class="section-block">
+                    <div class="section-title">Cách dùng</div>
+                    <div class="section-text">Diễn tả hành động bắt đầu trong quá khứ, kéo dài đến hiện tại và có thể tiếp tục ở tương lai. Thường dùng để nêu các tác động, nguyên nhân dẫn đến hiện trạng ngày nay.</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Công thức</div>
+                    <div class="formula-box">
+                        (+) S + have/has + V3/ed<br>
+                        (-) S + have/has + not + V3/ed<br>
+                        (?) Have/Has + S + V3/ed?
+                    </div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Dấu hiệu nhận biết</div>
+                    <div class="section-text">Since, for, recently, so far, over the last few decades...</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Ví dụ học thuật</div>
+                    <div class="example-box">
+                        Over the last few decades, technological advancements <span class="highlight-v">have transformed</span> the way people communicate.
+                        <span class="example-trans">Trong vài thập kỷ qua, những tiến bộ công nghệ đã làm thay đổi cách con người giao tiếp.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Tương lai đơn -->
+        <div class="tense-card glass-panel" onclick="toggleCard(this)">
+            <div class="tense-header">
+                <div class="tense-name"><span class="tense-number">5</span>Tương lai đơn (Future Simple)</div>
+                <svg class="icon-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="tense-content" onclick="event.stopPropagation()">
+                <div class="section-block">
+                    <div class="section-title">Cách dùng</div>
+                    <div class="section-text">Diễn đạt một quyết định tại thời điểm nói, lời hứa, hoặc một dự đoán về các xu hướng, số liệu trong tương lai.</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Công thức</div>
+                    <div class="formula-box">
+                        (+) S + will + V(nguyên thể)<br>
+                        (-) S + will + not (won't) + V<br>
+                        (?) Will + S + V?
+                    </div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Dấu hiệu nhận biết</div>
+                    <div class="section-text">In the future, tomorrow, next (year/month), projected to, predicted to by 2050...</div>
+                </div>
+                <div class="section-block">
+                    <div class="section-title">Ví dụ học thuật</div>
+                    <div class="example-box">
+                        It is predicted that the use of renewable energy <span class="highlight-v">will rise</span> significantly by 2030.
+                        <span class="example-trans">Người ta dự đoán rằng việc sử dụng năng lượng tái tạo sẽ tăng đáng kể vào năm 2030.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleCard(card) {
+            // Đóng tất cả các thẻ đang mở khác (nếu muốn chỉ 1 thẻ mở tại 1 thời điểm)
+            const allCards = document.querySelectorAll('.tense-card');
+            allCards.forEach(c => {
+                if (c !== card && c.classList.contains('active')) {
+                    c.classList.remove('active');
+                }
+            });
+            
+            // Bật/tắt thẻ hiện tại được click
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
