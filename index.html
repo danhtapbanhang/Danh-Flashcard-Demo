@@ -462,7 +462,7 @@
                 "Voice|/vɔɪs/|The sounds made when people speak or sing.|Giọng nói|She has a beautiful singing voice.|https://images.unsplash.com/featured/500x350/?voice,singing|noun",
                 "Walk|/wɔːk/|To move forward by putting one foot in front of the other.|Đi bộ|I walk to the park every evening.|https://images.unsplash.com/featured/500x350/?walk,walking|verb",
                 "Water|/ˈwɔː.tər/|A clear liquid that you drink to stay alive.|Nước|I need to drink some water.|https://images.unsplash.com/featured/500x350/?water,drink|noun",
-                "Young|/jʌŋ/|Having lived or existed for only a short time.|Trẻ tuổi|The young boy is very smart.|https://images.unsplash.com/featured/500x350/?young,youth|adj"
+                "Young|/jʌŋ/|Having lived or existed for only a short time.|Trẻ tuổi|The young boy is very smart.|https://images.unsplash.com/featured/500x350/?young,youth|adj",
                 "Answer|/ˈɑːn.sər/|To speak or write back to someone.|Trả lời|Please answer my question.|https://images.unsplash.com/featured/500x350/?answer,question|verb",
                 "Beautiful|/ˈbjuː.tɪ.fəl/|Very attractive to look at.|Xinh đẹp|She is wearing a beautiful dress.|https://images.unsplash.com/featured/500x350/?beautiful,nature|adj",
                 "Big|/bɪɡ/|Large in size or amount.|To lớn|They live in a big house.|https://images.unsplash.com/featured/500x350/?big,elephant|adj",
@@ -524,7 +524,7 @@
                 "Receive|/rɪˈsiːv/|To get or be given something.|Nhận được|I received a beautiful letter this morning.|https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=500|verb",
                 "Reduce|/rɪˈdʒuːs/|To make something smaller or less in amount.|Giảm bớt|We need to reduce our daily spending.|https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500|verb",
                 "Support|/səˈpɔːt/|To agree with and give encouragement to someone.|Hỗ trợ, ủng hộ|My family always supports my choices.|https://images.unsplash.com/photo-1473643081880-a862c75531ba?w=500|verb",
-                "Various|/ˈveə.ri.əs/|Many different; of several kinds.|Khác nhau, đa dạng|There are various ways to solve this problem.|https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500|adj"
+                "Various|/ˈveə.ri.əs/|Many different; of several kinds.|Khác nhau, đa dạng|There are various ways to solve this problem.|https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500|adj",
                 "Absorb|/əbˈzɔːb/|To take in a liquid, gas or other substance from the surface or space around.|Hấp thụ|Plants absorb carbon dioxide from the air.|https://images.unsplash.com/featured/500x350/?absorb,sponge|verb",
                 "Academic|/ˌæk.əˈdem.ɪk/|Relating to schools, colleges, and universities, or connected with studying and thinking.|Thuộc học thuật|He possesses impressive academic qualifications.|https://images.unsplash.com/featured/500x350/?academic,university|adj",
                 "Accurate|/ˈæk.jə.rət/|Correct, exact, and without any mistakes.|Chính xác|It is difficult to get accurate figures on the population.|https://images.unsplash.com/featured/500x350/?accurate,target|adj",
@@ -608,7 +608,7 @@
             const categories = ['elementary', 'intermediate', 'advanced', 'toeic'];
             categories.forEach(cat => {
                 const baseArr = rawData[cat];
-                for (let i = 1; i <= 1000; i++) {
+                for (let i = 1; i <= 500; i++) {
                     const template = baseArr[(i - 1) % baseArr.length];
                     const parts = template.split('|');
                     database[cat].push({
