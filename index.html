@@ -3,50 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Danh's Flashcard — Liquid Glass iOS 26</title>
+    <title>Học tiếng Anh cùng thầy Danh — Liquid Glass iOS 26</title>
     <style>
         /* =========================================
-           LIQUID GLASS iOS 26 - AESTHETIC OVERHAUL
+           LIQUID GLASS iOS 26 - CORE STYLES
            ========================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* LIQUID BACKGROUND */
-        body {
-            background-color: #050505;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            color: #ffffff;
-            padding: 20px 16px;
-            position: relative;
-            overflow-x: hidden;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: #050505; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; color: #ffffff; padding: 20px 16px; position: relative; overflow-x: hidden; }
 
         /* FLOATING LIQUID ORBS */
-        .bg-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-        }
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.6; }
         .orb-1 { width: 350px; height: 350px; background: #ff2a5f; top: -50px; left: -100px; animation: float 14s infinite alternate ease-in-out; }
         .orb-2 { width: 450px; height: 450px; background: #00f2fe; bottom: -100px; right: -150px; animation: float 18s infinite alternate-reverse ease-in-out; }
         .orb-3 { width: 300px; height: 300px; background: #8a2be2; top: 40%; left: 50%; transform: translateX(-50%); animation: float 12s infinite alternate ease-in-out; }
-
         @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 60px) scale(1.1); } }
 
-        .game-container {
-            width: 100%; max-width: 440px; height: 100%; display: flex; flex-direction: column; flex-grow: 1; justify-content: center; position: relative; z-index: 1;
-        }
+        .game-container { width: 100%; max-width: 440px; height: 100%; display: flex; flex-direction: column; flex-grow: 1; justify-content: center; position: relative; z-index: 1; }
 
         /* GLOBAL GLASSMIXIN */
         .glass-panel { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25); }
@@ -59,7 +31,7 @@
         .btn-auth-trigger.logout { color: #ff453a; }
 
         .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-        h1.brand-title { color: #ffffff; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px; }
+        h1.brand-title { color: #ffffff; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
         .header-actions { display: flex; gap: 12px; }
         .btn-icon-trigger { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
@@ -69,12 +41,12 @@
         .segment-btn { flex: 1; text-align: center; border: none; background: transparent; padding: 10px 0; font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; border-radius: 12px; transition: 0.3s; }
         .segment-btn.is-active { background: rgba(255, 255, 255, 0.2); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
 
-        /* CATEGORY DROPDOWN (Ô CHỌN BỘ TỪ) */
+        /* CATEGORY DROPDOWN */
         .select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
-        .glass-select { width: 100%; padding: 14px 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #00f2fe; font-size: 1.05rem; font-weight: 700; appearance: none; -webkit-appearance: none; outline: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; text-align-last: center; transition: 0.2s; }
+        .glass-select { width: 100%; padding: 14px 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #00f2fe; font-size: 1.05rem; font-weight: 700; appearance: none; outline: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: center; text-align-last: center; transition: 0.2s; backdrop-filter: blur(24px); }
         .glass-select:focus { border-color: #00f2fe; background: rgba(0, 242, 254, 0.1); }
         .select-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); pointer-events: none; }
-        .glass-select option { background: #1a1a1a; color: #ffffff; font-weight: 500; font-size: 1rem; }
+        .glass-select option { background: #1a1a1a; color: #ffffff; }
 
         /* SCOREBOARD & PROGRESS */
         .score-board { display: flex; justify-content: space-between; padding: 14px 18px; border-radius: 18px; margin-bottom: 16px; font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 500; }
@@ -82,7 +54,7 @@
         .progress-container { width: 100%; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         .progress-bar { height: 5px; width: 0%; background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 10px rgba(0,242,254,0.6); transition: width 0.3s ease; }
 
-        /* FLASHCARD WRAPPER */
+        /* FLASHCARD */
         .flashcard-wrapper { perspective: 1200px; width: 100%; height: 400px; margin-bottom: 28px; }
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 28px; cursor: pointer; }
         .flashcard.is-flipped { transform: rotateY(180deg); }
@@ -123,7 +95,7 @@
         button:disabled { opacity: 0.3 !important; cursor: not-allowed; }
         .hint { color: rgba(255,255,255,0.4); font-size: 0.8rem; text-align: center; margin-top: 16px; letter-spacing: 0.5px; }
 
-        /* MODALS SYSTEM - LIQUID GLASS SHEET */
+        /* MODALS */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 1000; }
         .modal-overlay.is-visible { opacity: 1; pointer-events: auto; }
         .modal-sheet { width: 100%; max-width: 460px; background: rgba(20, 20, 20, 0.65); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-top: 1px solid rgba(255,255,255,0.2); box-shadow: 0 -10px 40px rgba(0,0,0,0.3); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -511,8 +483,8 @@
             const categories = ['elementary', 'intermediate', 'advanced', 'toeic'];
             categories.forEach(cat => {
                 const baseArr = rawData[cat];
-                for (let i = 1; i <= 500; i++) {
-                    const template = baseArr[(i - 1) % baseArr.length];
+                for (let i = 1; i <= baseArr.length; i++) {
+                    const template = baseArr[i - 1];
                     const parts = template.split('|');
                     database[cat].push({
                         id: `${cat.substring(0, 2)}_${i}`,
@@ -587,14 +559,14 @@
         function buildReviewCategory() {
             const allWords = [...database.elementary, ...database.intermediate, ...database.advanced, ...database.toeic];
             database.review = allWords.filter(item => reviewList.includes(item.id));
-            document.getElementById('seg-review').innerText = `Ôn tập (${database.review.length})`;
+            const optReview = document.getElementById('opt-review');
+            if (optReview) optReview.innerText = `Ôn tập (${database.review.length})`;
             if (currentCategory === 'review') flashcards = [...database.review];
         }
 
         function switchCategory(catName) {
             currentCategory = catName;
-            document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('is-active'));
-            document.getElementById(`seg-${catName}`).classList.add('is-active');
+            document.getElementById('vocab-category-select').value = catName;
             flashcards = [...database[currentCategory]];
             resetGame();
         }
