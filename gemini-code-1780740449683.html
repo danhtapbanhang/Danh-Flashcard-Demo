@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Phát Âm IPA — Liquid Glass iOS 26</title>
+    <style>
+        /* =========================================
+           LIQUID GLASS iOS 26 - CORE STYLES
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: #050505; min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: #ffffff; padding: 20px 16px; position: relative; overflow-x: hidden; }
+
+        /* FLOATING LIQUID ORBS */
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.6; }
+        .orb-1 { width: 350px; height: 350px; background: #ff2a5f; top: -50px; left: -100px; animation: float 14s infinite alternate ease-in-out; }
+        .orb-2 { width: 450px; height: 450px; background: #00f2fe; bottom: -100px; right: -150px; animation: float 18s infinite alternate-reverse ease-in-out; }
+        .orb-3 { width: 300px; height: 300px; background: #8a2be2; top: 40%; left: 50%; transform: translateX(-50%); animation: float 12s infinite alternate ease-in-out; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 60px) scale(1.1); } }
+
+        .game-container { width: 100%; max-width: 440px; display: flex; flex-direction: column; flex-grow: 1; position: relative; z-index: 1; }
+
+        /* GLOBAL GLASSMIXIN */
+        .glass-panel { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25); }
+
+        /* HEADER AREA */
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; margin-top: 10px; }
+        h1.brand-title { color: #ffffff; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px; }
+        .btn-icon-trigger { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: 0.2s; }
+        .btn-icon-trigger:active { transform: scale(0.95); }
+
+        /* SEGMENTED CONTROL */
+        .segmented-wrapper { width: 100%; overflow-x: auto; margin-bottom: 20px; scrollbar-width: none; }
+        .segmented-wrapper::-webkit-scrollbar { display: none; }
+        .segmented-control { display: flex; background: rgba(0, 0, 0, 0.3); padding: 4px; border-radius: 14px; min-width: max-content; gap: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        .segment-btn { border: none; background: transparent; padding: 10px 16px; font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.6); cursor: pointer; border-radius: 10px; transition: 0.3s; }
+        .segment-btn.is-active { background: rgba(255, 255, 255, 0.2); font-weight: 600; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+
+        /* PROGRESS */
+        .progress-container { width: 100%; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .progress-bar { height: 5px; width: 0%; background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 10px rgba(0,242,254,0.6); transition: width 0.3s ease; }
+        .progress-text { text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; font-weight: 600; }
+        .progress-text span { color: #00f2fe; }
+
+        /* FLASHCARD WRAPPER */
+        .flashcard-wrapper { perspective: 1200px; width: 100%; height: 420px; margin-bottom: 28px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 28px; cursor: pointer; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 28px; display: flex; flex-direction: column; padding: 24px; }
+        
+        /* CARD FRONT (IPA SYMBOL) */
+        .card-front { align-items: center; justify-content: center; }
+        .ipa-symbol { font-size: 6rem; font-weight: 800; color: #00f2fe; text-shadow: 0 0 20px rgba(0,242,254,0.4); margin-bottom: 10px; font-family: "Times New Roman", Times, serif; }
+        .ipa-type-badge { font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; }
+
+        /* CARD BACK (DETAILS) */
+        .card-back { transform: rotateY(180deg); align-items: flex-start; text-align: left; justify-content: flex-start; overflow-y: auto; scrollbar-width: none; }
+        .card-back::-webkit-scrollbar { display: none; }
+        
+        .header-back { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
+        .ipa-small { font-size: 2rem; font-weight: 800; color: #00f2fe; font-family: "Times New Roman", Times, serif; }
+        .btn-speaker { background: rgba(0,242,254,0.15); border: 1px solid rgba(0,242,254,0.3); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00f2fe; cursor: pointer; transition: 0.2s; box-shadow: 0 0 10px rgba(0,242,254,0.2); }
+        .btn-speaker:active { transform: scale(0.9); }
+
+        .back-section { margin-bottom: 20px; width: 100%; }
+        .back-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 6px; }
+        .desc-box { font-size: 1.1rem; line-height: 1.5; color: #ffffff; }
+        .example-box { font-size: 1.25rem; font-weight: 600; color: #32d74b; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
+
+        /* NAV BUTTONS */
+        .nav-buttons { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .btn-nav { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; font-size: 1rem; font-weight: 600; cursor: pointer; padding: 14px 24px; border-radius: 18px; flex: 1; transition: 0.2s; backdrop-filter: blur(10px); }
+        .btn-nav:active { transform: scale(0.96); }
+        button:disabled { opacity: 0.3 !important; cursor: not-allowed; }
+        .hint { color: rgba(255,255,255,0.4); font-size: 0.85rem; text-align: center; margin-bottom: 20px; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <div class="game-container">
+        
+        <!-- HEADER -->
+        <div class="header-area">
+            <h1 class="brand-title">Luyện Phát Âm (IPA)</h1>
+            <button class="btn-icon-trigger" onclick="window.location.href='flashcard.html'">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                Quay lại
+            </button>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="segmented-wrapper">
+            <div class="segmented-control glass-panel">
+                <button class="segment-btn is-active" id="seg-vowels" onclick="switchCategory('vowels')">Nguyên âm (Vowels)</button>
+                <button class="segment-btn" id="seg-diphthongs" onclick="switchCategory('diphthongs')">Nguyên âm đôi</button>
+                <button class="segment-btn" id="seg-consonants" onclick="switchCategory('consonants')">Phụ âm (Consonants)</button>
+            </div>
+        </div>
+
+        <div class="progress-text">Tiến độ: <span id="lbl-progress">1 / 12</span></div>
+        <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
+        <!-- FLASHCARD -->
+        <div class="flashcard-wrapper">
+            <div class="flashcard" id="ipa-card" onclick="handleCardClick(event)">
+                
+                <!-- FRONT -->
+                <div class="card-face card-front glass-panel">
+                    <div class="ipa-symbol" id="lbl-front-symbol">/iː/</div>
+                    <div class="ipa-type-badge" id="lbl-front-type">Nguyên âm dài</div>
+                </div>
+
+                <!-- BACK -->
+                <div class="card-face card-back glass-panel">
+                    <div class="header-back">
+                        <div class="ipa-small" id="lbl-back-symbol">/iː/</div>
+                        <button class="btn-speaker" id="btn-speak-icon" title="Nghe ví dụ">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="back-section">
+                        <div class="back-title">Khẩu hình miệng</div>
+                        <div class="desc-box" id="lbl-desc">-</div>
+                    </div>
+
+                    <div class="back-section">
+                        <div class="back-title">Từ vựng ví dụ</div>
+                        <div class="example-box" id="lbl-examples">-</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="hint">Chạm vào giữa thẻ để lật — Chạm loa để nghe ví dụ</div>
+
+        <div class="nav-buttons">
+            <button class="btn-nav" id="btn-prev" onclick="prevCard()">Quay lại</button>
+            <button class="btn-nav" id="btn-next" style="background: rgba(0,242,254,0.15); border-color: rgba(0,242,254,0.3); color: #00f2fe;" onclick="nextCard()">Tiếp theo</button>
+        </div>
+
+        <!-- KHU VỰC LIÊN HỆ THẦY DANH -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 10px; padding-bottom: 30px;">
+            <div style="color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">Liên hệ với thầy Danh</div>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <a href="https://zalo.me/0911594794" target="_blank" class="btn-icon-trigger" title="Liên hệ Zalo" style="padding: 14px; border-radius: 50%; text-decoration: none;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" width="28" height="28" alt="Zalo">
+                </a>
+                <a href="https://www.facebook.com/share/1CwD2mYLhS/?mibextid=wwXIfr" target="_blank" class="btn-icon-trigger" title="Liên hệ Facebook" style="padding: 14px; border-radius: 50%; text-decoration: none;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // DỮ LIỆU BẢNG IPA 
+        // audioText chứa các từ tiếng Anh chuẩn để hệ thống Text-to-Speech có thể đọc được chính xác.
+        const ipaData = {
+            vowels: [
+                { symbol: "/iː/", type: "Nguyên âm dài", desc: "Môi mở rộng sang hai bên như đang mỉm cười. Lưỡi nâng cao. Kéo dài âm.", examples: "see, heat, piece", audioText: "see, heat, piece" },
+                { symbol: "/ɪ/", type: "Nguyên âm ngắn", desc: "Môi hơi mở, lưỡi hạ thấp hơn /iː/. Phát âm ngắn, dứt khoát.", examples: "sit, hit, miss", audioText: "sit, hit, miss" },
+                { symbol: "/uː/", type: "Nguyên âm dài", desc: "Môi chu tròn ra phía trước. Lưỡi nâng cao phía sau. Kéo dài âm.", examples: "too, blue, food", audioText: "too, blue, food" },
+                { symbol: "/ʊ/", type: "Nguyên âm ngắn", desc: "Môi hơi tròn. Phát âm ngắn, đẩy hơi từ cổ họng.", examples: "put, look, good", audioText: "put, look, good" },
+                { symbol: "/e/", type: "Nguyên âm ngắn", desc: "Môi mở rộng hơn âm /ɪ/. Lưỡi hạ thấp.", examples: "bed, head, pen", audioText: "bed, head, pen" },
+                { symbol: "/ə/", type: "Âm Schwa (Ngắn)", desc: "Âm phổ biến nhất tiếng Anh. Môi mở tự nhiên, hoàn toàn thả lỏng.", examples: "about, teacher, sofa", audioText: "about, teacher, sofa" },
+                { symbol: "/ɜː/", type: "Nguyên âm dài", desc: "Môi mở tự nhiên. Lưỡi cong lên chạm vòm họng trên (có âm 'r').", examples: "bird, word, learn", audioText: "bird, word, learn" },
+                { symbol: "/ɔː/", type: "Nguyên âm dài", desc: "Môi hơi tròn. Lưỡi hạ thấp phía sau.", examples: "door, four, law", audioText: "door, four, law" },
+                { symbol: "/æ/", type: "Nguyên âm bẹt", desc: "Miệng mở to, hạ cằm xuống. Âm phát ra lai giữa chữ 'a' và 'e'.", examples: "cat, bad, apple", audioText: "cat, bad, apple" },
+                { symbol: "/ʌ/", type: "Nguyên âm ngắn", desc: "Miệng mở vừa phải. Âm phát ra lai giữa 'ă' và 'ơ' trong tiếng Việt.", examples: "cup, love, money", audioText: "cup, love, money" },
+                { symbol: "/ɑː/", type: "Nguyên âm dài", desc: "Miệng mở to hết cỡ. Âm phát ra từ sâu trong cổ họng.", examples: "car, dark, father", audioText: "car, dark, father" },
+                { symbol: "/ɒ/", type: "Nguyên âm ngắn", desc: "Môi hơi tròn. Hạ cằm. (Thường dùng trong Anh-Anh).", examples: "hot, box, dog", audioText: "hot, box, dog" }
+            ],
+            diphthongs: [
+                { symbol: "/ɪə/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ɪ/ sang âm /ə/ một cách liền mạch.", examples: "here, near, clear", audioText: "here, near, clear" },
+                { symbol: "/eɪ/", type: "Nguyên âm đôi", desc: "Trượt từ âm /e/ sang âm /ɪ/.", examples: "say, play, eight", audioText: "say, play, eight" },
+                { symbol: "/ʊə/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ʊ/ sang âm /ə/.", examples: "tour, poor, sure", audioText: "tour, poor, sure" },
+                { symbol: "/ɔɪ/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ɔː/ sang âm /ɪ/.", examples: "boy, join, voice", audioText: "boy, join, voice" },
+                { symbol: "/əʊ/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ə/ sang âm /ʊ/.", examples: "go, home, show", audioText: "go, home, show" },
+                { symbol: "/eə/", type: "Nguyên âm đôi", desc: "Trượt từ âm /e/ sang âm /ə/.", examples: "hair, bear, care", audioText: "hair, bear, care" },
+                { symbol: "/aɪ/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ɑː/ sang âm /ɪ/.", examples: "my, high, sky", audioText: "my, high, sky" },
+                { symbol: "/aʊ/", type: "Nguyên âm đôi", desc: "Trượt từ âm /ɑː/ sang âm /ʊ/.", examples: "now, how, house", audioText: "now, how, house" }
+            ],
+            consonants: [
+                { symbol: "/p/", type: "Phụ âm vô thanh", desc: "Mím chặt hai môi rồi bật mạnh hơi ra ngoài.", examples: "pen, park, stop", audioText: "pen, park, stop" },
+                { symbol: "/b/", type: "Phụ âm hữu thanh", desc: "Giống /p/ nhưng dây thanh quản rung.", examples: "boy, bad, baby", audioText: "boy, bad, baby" },
+                { symbol: "/t/", type: "Phụ âm vô thanh", desc: "Đặt đầu lưỡi chạm nướu trên, bật hơi mạnh ra.", examples: "tea, time, cat", audioText: "tea, time, cat" },
+                { symbol: "/d/", type: "Phụ âm hữu thanh", desc: "Giống /t/ nhưng dây thanh quản rung.", examples: "day, door, dog", audioText: "day, door, dog" },
+                { symbol: "/k/", type: "Phụ âm vô thanh", desc: "Nâng cuống lưỡi chạm ngạc mềm, bật hơi mạnh.", examples: "car, key, school", audioText: "car, key, school" },
+                { symbol: "/g/", type: "Phụ âm hữu thanh", desc: "Giống /k/ nhưng dây thanh quản rung.", examples: "go, game, bag", audioText: "go, game, bag" },
+                { symbol: "/θ/", type: "Phụ âm vô thanh", desc: "Thè đầu lưỡi ra giữa 2 hàm răng, đẩy hơi nhẹ ra ngoài.", examples: "think, thin, both", audioText: "think, thin, both" },
+                { symbol: "/ð/", type: "Phụ âm hữu thanh", desc: "Giống /θ/ nhưng dây thanh quản rung.", examples: "this, that, mother", audioText: "this, that, mother" },
+                { symbol: "/ʃ/", type: "Phụ âm vô thanh", desc: "Chu môi, cong lưỡi lên vòm họng trên, đẩy hơi (giống suỵt).", examples: "she, ship, sure", audioText: "she, ship, sure" },
+                { symbol: "/ʒ/", type: "Phụ âm hữu thanh", desc: "Giống /ʃ/ nhưng dây thanh quản rung.", examples: "vision, measure, usual", audioText: "vision, measure, usual" }
+            ]
+        };
+
+        let currentCategory = 'vowels';
+        let cardsList = [];
+        let currentIndex = 0;
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.5; // Đọc chậm để nghe rõ khẩu hình
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function handleCardClick(event) {
+            if (event.target.closest('#btn-speak-icon') || event.target.closest('.btn-speaker')) {
+                event.stopPropagation();
+                if (cardsList[currentIndex]) {
+                    // Đọc phần audioText (các từ vựng ví dụ)
+                    speakText(cardsList[currentIndex].audioText);
+                }
+                return;
+            }
+            document.getElementById('ipa-card').classList.toggle('is-flipped');
+        }
+
+        function switchCategory(catName) {
+            currentCategory = catName;
+            document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('is-active'));
+            document.getElementById(`seg-${catName}`).classList.add('is-active');
+            
+            cardsList = ipaData[currentCategory];
+            currentIndex = 0;
+            updateCard();
+        }
+
+        function updateCard() {
+            document.getElementById('ipa-card').classList.remove('is-flipped');
+            
+            if (cardsList.length === 0) return;
+
+            const data = cardsList[currentIndex];
+            
+            // Cập nhật mặt trước
+            document.getElementById('lbl-front-symbol').innerText = data.symbol;
+            document.getElementById('lbl-front-type').innerText = data.type;
+            
+            // Cập nhật mặt sau
+            document.getElementById('lbl-back-symbol').innerText = data.symbol;
+            document.getElementById('lbl-desc').innerText = data.desc;
+            document.getElementById('lbl-examples').innerText = data.examples;
+
+            // Cập nhật tiến độ
+            const total = cardsList.length;
+            document.getElementById('lbl-progress').innerText = `${currentIndex + 1} / ${total}`;
+            document.getElementById('progress-bar').style.width = `${((currentIndex + 1) / total) * 100}%`;
+            
+            // Trạng thái nút bấm
+            document.getElementById('btn-prev').disabled = currentIndex === 0;
+            document.getElementById('btn-next').disabled = currentIndex === total - 1;
+        }
+
+        function nextCard() { if (currentIndex < cardsList.length - 1) { currentIndex++; updateCard(); } }
+        function prevCard() { if (currentIndex > 0) { currentIndex--; updateCard(); } }
+
+        // Khởi tạo
+        switchCategory('vowels');
+    </script>
+</body>
+</html>
